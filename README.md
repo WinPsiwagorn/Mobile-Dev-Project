@@ -32,6 +32,7 @@ EditProfileScreen:
 - remove phone, location
 
 from BudgetApp(W.5) --> BudgetApp(V.6)
+edit by kongphop
 Navigation Bar:
 - change Bill to Add
 - connect the add function to the add transaction page.
