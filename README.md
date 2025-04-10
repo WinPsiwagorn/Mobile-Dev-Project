@@ -30,3 +30,11 @@ ProfileScreen:
 
 EditProfileScreen:
 - remove phone, location
+
+from BudgetApp(W.5) --> BudgetApp(V.6)
+Navigation Bar:
+- change Bill to Add
+- connect the add function to the add transaction page.
+Add Transaction:
+- change Bill to Add
+- added income and expenses function
