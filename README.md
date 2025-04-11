@@ -39,3 +39,16 @@ Navigation Bar:
 Add Transaction:
 - change Bill to Add
 - added income and expenses function
+
+from BudgetApp(V.6) --> BudgetApp(V.7)
+ReportsScreen:
+- remove savings & investments report card
+- add margin between cards & period selector
+DashboardScreen:
+- navigating Bills in Quick action to BillsScreen
+BillsScreen:
+- add arrow button which is returning to DashboardScreen
+- add margin between bills container & summary container
+AddBillScreen:
+- remove payment method & recurring bill
+- rename Category to Account
