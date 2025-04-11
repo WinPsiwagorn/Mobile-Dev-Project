@@ -1,0 +1,12 @@
+specVersion: "v1beta"
+serviceId: "budgetv6-3test"
+location: "us-central1"
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: "fdcdb"
+      cloudSql:
+        instanceId: "budgetv6-3test-fdc"
+      # schemaValidation: "COMPATIBLE"
+connectorDirs: ["./connector"]

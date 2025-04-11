@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "410780487079",
+    "project_id": "ww-8082d",
+    "storage_bucket": "ww-8082d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410780487079:android:94e073a8d57c862048fa82",
+        "android_client_info": {
+          "package_name": "com.yourapp.budgetapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqhAt5XllsfGcFnzHOzXDaiEtPq0Cz_zE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
