@@ -1,0 +1,16 @@
+{
+  "expo": {
+    "name": "BudgetAppV0",
+    "slug": "BudgetAppV0",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/logo.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1A1A1A"
+    }
+  }
+}

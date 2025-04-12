@@ -57,3 +57,8 @@ ProfileScreen:
 +TermPrivacyScreen replace HelpSupport(deleted)
 
 and update in App.tsx, navigation.d.ts(types folder)
+
+from BudgetApp(v.1.0.2) --> BudgetApp(v.1.0.3) edited by kongphop
+
+BillDetailsScreen:
+- edit the bill page so that you can select the account you want to pay the bill for.
