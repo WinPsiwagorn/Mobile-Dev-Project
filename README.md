@@ -75,3 +75,6 @@ DashboardScreen:
 - show an actual data.
 ReportScreen:
 - show an actual data.
+
+BudgetApp(V.1.0.4)
+-Add Minor Check when user want to Sign Out , ask if user really want to logging out

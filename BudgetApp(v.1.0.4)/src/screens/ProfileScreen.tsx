@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Image,
   Switch,
+  Alert,
 } from "react-native"
 import { useTheme } from "../context/ThemeContext"
 import { useAuth } from "../context/AuthContext"
@@ -48,11 +49,28 @@ export default function ProfileScreen({ navigation }: Props) {
   }
 
   const handleSignOut = async () => {
-    try {
-      await logOut()
-    } catch (error) {
-      console.error("Error signing out:", error)
-    }
+    Alert.alert(
+      "Sign Out",
+      "Are you sure you want to sign out?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        {
+          text: "Sign Out",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await logOut()
+            } catch (error) {
+              console.error("Error signing out:", error)
+            }
+          }
+        }
+      ],
+      { cancelable: true }
+    )
   }
 
   // Grouped Menu Items
