@@ -62,3 +62,16 @@ from BudgetApp(v.1.0.2) --> BudgetApp(v.1.0.3) edited by kongphop
 
 BillDetailsScreen:
 - edit the bill page so that you can select the account you want to pay the bill for.
+
+from BudgetApp(v.1.0.3) --> BudgetApp(v.1.0.4) edited by Supawat
+
+AccountsScreen:
+- Fix saving goal combine with total balance in saving type account.
+AccountDetailsScreen:
+- Change design of saving type account to separate between saving goal and total balance.
+AddAccountScreen:
+- separate between saving goal and total balance when create account.
+DashboardScreen:
+- show an actual data.
+ReportScreen:
+- show an actual data.
