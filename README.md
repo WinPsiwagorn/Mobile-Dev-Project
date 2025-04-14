@@ -86,3 +86,10 @@ BudgetApp(V.1.0.5)
 
 BudgetApp(v.1.0.6)
 -display data in account screen type saving 
+
+BudgetApp(V.1.0.7)
+- consistant between account page and add account page
+- Drop Payment method in add Bill
+- In Bill detail screen change payment method to account
+- fix comfirmpayment text
+- after pay bill and expense in account and dashboard
