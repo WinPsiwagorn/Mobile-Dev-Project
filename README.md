@@ -80,6 +80,9 @@ BudgetApp(V.1.0.4)
 -Add Minor Check when user want to Sign Out , ask if user really want to logging out
 
 BudgetApp(V.1.0.5)
-    -pop up when money not enough 
-    -display data in account screen and bill(still have issue with account type saving)
-    -expense detail & income detail data 
+-pop up when money not enough 
+-display data in account screen and bill(still have issue with account type saving)
+-expense detail & income detail data 
+
+BudgetApp(v.1.0.6)
+-display data in account screen type saving 
