@@ -19,7 +19,6 @@ import { LinearGradient } from "expo-linear-gradient"
 import { ArrowLeft } from "lucide-react-native"
 import { useNavigation } from "@react-navigation/native"
 import { useFinance } from "../context/FinanceContext"
-import DateTimePicker from '@react-native-community/datetimepicker'
 
 const { width } = Dimensions.get("window")
 
@@ -52,7 +51,7 @@ export default function AddBillScreen() {
   const { addBill, accounts } = useFinance()
   const [billName, setBillName] = useState("")
   const [amount, setAmount] = useState("")
-  const [dueDate, setDueDate] = useState(new Date())
+  const [dueDate, setDueDate] = useState("")
   const [category, setCategory] = useState("utilities")
   const [recurring, setRecurring] = useState(false)
   const [frequency, setFrequency] = useState("monthly")
@@ -61,7 +60,6 @@ export default function AddBillScreen() {
   const [paymentAccountId, setPaymentAccountId] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [showDatePicker, setShowDatePicker] = useState(false)
 
   const handleSave = async () => {
     if (!billName.trim() || !amount || !dueDate) {
@@ -79,7 +77,7 @@ export default function AddBillScreen() {
       const newBill = {
         name: billName.trim(),
         amount: parseFloat(amount),
-        dueDate: dueDate.toISOString(),
+        dueDate: new Date(dueDate).toISOString(),
         category,
         status: "pending" as const,
         recurring,
@@ -105,13 +103,6 @@ export default function AddBillScreen() {
       setIsLoading(false)
     }
   }
-
-  const handleDateChange = (event: any, selectedDate?: Date) => {
-    setShowDatePicker(false);
-    if (selectedDate) {
-      setDueDate(selectedDate);
-    }
-  };
 
   return (
     <KeyboardAvoidingView
@@ -161,34 +152,20 @@ export default function AddBillScreen() {
           />
 
           <Text style={[styles.label, { color: colors.text }]}>Due Date</Text>
-          <TouchableOpacity
+          <TextInput
             style={[
               styles.input,
               {
                 backgroundColor: colors.glass.background,
                 borderColor: colors.glass.border,
-                justifyContent: "center",
+                color: colors.text,
               },
             ]}
-            onPress={() => setShowDatePicker(true)}
-          >
-            <Text style={{ color: colors.text }}>
-              {dueDate.toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-              })}
-            </Text>
-          </TouchableOpacity>
-
-          {showDatePicker && (
-            <DateTimePicker
-              value={dueDate}
-              mode="date"
-              display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-              onChange={handleDateChange}
-            />
-          )}
+            placeholder="YYYY-MM-DD"
+            placeholderTextColor={colors.textSecondary}
+            value={dueDate}
+            onChangeText={setDueDate}
+          />
 
           <Text style={[styles.label, { color: colors.text }]}>Category</Text>
           <View style={styles.categoriesContainer}>
