@@ -8,62 +8,97 @@ import { LinearGradient } from "expo-linear-gradient"
 import { Ionicons } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/native"
 import ScreenLayout from "../components/ScreenLayout"
+import { useFinance } from "../context/FinanceContext"
 
 const { width } = Dimensions.get("window")
-
-const REPORT_TYPES = [
-  {
-    id: "expenses",
-    icon: "trending-down-outline",
-    label: "Expenses",
-    amount: 2340.0,
-    change: -12.5,
-  },
-  {
-    id: "income",
-    icon: "trending-up-outline",
-    label: "Income",
-    amount: 6520.0,
-    change: 8.3,
-  },
-  {
-    id: "savings",
-    icon: "wallet-outline",
-    label: "Savings",
-    amount: 4180.0,
-    change: 15.7,
-  },
-  {
-    id: "investments",
-    icon: "bar-chart-outline",
-    label: "Investments",
-    amount: 12500.0,
-    change: 5.2,
-  },
-]
-
-const CATEGORIES = [
-  { id: "shopping", name: "Shopping", amount: 850.0, percentage: 35 },
-  { id: "food", name: "Food & Drinks", amount: 620.0, percentage: 25 },
-  { id: "transport", name: "Transport", amount: 450.0, percentage: 20 },
-  { id: "utilities", name: "Utilities", amount: 320.0, percentage: 15 },
-  { id: "others", name: "Others", amount: 100.0, percentage: 5 },
-]
 
 export default function ReportsScreen() {
   const navigation = useNavigation<MainTabNavigationProp>()
   const { colors } = useTheme()
   const [selectedPeriod, setSelectedPeriod] = useState("month")
-  const [timeRange, setTimeRange] = useState("This Month")
-  const [chartType, setChartType] = useState("expenses")
+  const { transactions, accounts } = useFinance()
 
-  // Mock data
-  const spendingByCategory = [
-    { category: "Shopping", amount: 2450.8, percentage: 35 },
-    { category: "Food & Drinks", amount: 1850.5, percentage: 25 },
-    { category: "Transportation", amount: 950.3, percentage: 15 },
-    { category: "Entertainment", amount: 750.2, percentage: 12 },
-    { category: "Others", amount: 650.7, percentage: 13 },
+  // Get general accounts (excluding savings and investments)
+  const generalAccounts = accounts.filter(acc => acc.type === "general")
+  const savingsAndInvestmentAccounts = accounts.filter(acc => acc.type === "savings" || acc.type === "investment")
+
+  // Calculate total income from general accounts only
+  const totalIncome = transactions
+    .filter(t => t.type === "income" && generalAccounts.some(acc => acc.id === t.accountId))
+    .reduce((sum, t) => sum + t.amount, 0)
+
+  // Calculate total expenses from all accounts
+  const totalExpenses = transactions
+    .filter(t => t.type === "expense")
+    .reduce((sum, t) => sum + t.amount, 0)
+
+  // Calculate savings (income - expenses)
+  const totalSavings = totalIncome - totalExpenses
+
+  // Calculate savings rate (savings / income * 100)
+  const savingsRate = totalIncome > 0 ? (totalSavings / totalIncome) * 100 : 0
+
+  // Calculate total savings and investments
+  const totalInvestments = savingsAndInvestmentAccounts
+    .reduce((sum, acc) => sum + acc.balance, 0)
+
+  // Group transactions by account and calculate percentages
+  const accountSpending = transactions
+    .filter(t => t.type === "expense")
+    .reduce((acc, t) => {
+      const account = accounts.find(a => a.id === t.accountId)
+      if (!account) return acc
+      
+      const accountName = account.name
+      if (!acc[accountName]) {
+        acc[accountName] = {
+          amount: 0,
+          type: account.type
+        }
+      }
+      acc[accountName].amount += t.amount
+      return acc
+    }, {} as Record<string, { amount: number, type: string }>)
+
+  // Convert to array and calculate percentages
+  const spendingByAccount = Object.entries(accountSpending)
+    .map(([accountName, data]) => ({
+      accountName,
+      amount: data.amount,
+      type: data.type,
+      percentage: (data.amount / totalExpenses) * 100
+    }))
+    .sort((a, b) => b.amount - a.amount)
+
+  const REPORT_TYPES = [
+    {
+      id: "expenses",
+      icon: "trending-down-outline",
+      label: "Expenses",
+      amount: totalExpenses,
+      change: -12.5, // TODO: Calculate actual change from previous period
+    },
+    {
+      id: "income",
+      icon: "trending-up-outline",
+      label: "Income",
+      amount: totalIncome,
+      change: 8.3, // TODO: Calculate actual change from previous period
+    },
+    {
+      id: "savings",
+      icon: "wallet-outline",
+      label: "Savings",
+      amount: totalSavings,
+      change: savingsRate,
+    },
+    {
+      id: "investments",
+      icon: "bar-chart-outline",
+      label: "Investments & Savings",
+      amount: totalInvestments,
+      change: 5.2, // TODO: Calculate actual change from previous period
+    },
   ]
 
   return (
@@ -107,7 +142,9 @@ export default function ReportsScreen() {
                 <Ionicons name={report.icon as any} size={24} color={colors.primary} />
               </View>
               <Text style={[styles.reportLabel, { color: colors.text }]}>{report.label}</Text>
-              <Text style={[styles.reportAmount, { color: colors.text }]}>${report.amount.toFixed(2)}</Text>
+              <Text style={[styles.reportAmount, { color: colors.text }]}>
+                ${report.amount.toFixed(2)}
+              </Text>
               <View
                 style={[
                   styles.changeIndicator,
@@ -122,7 +159,7 @@ export default function ReportsScreen() {
                   color={report.change > 0 ? colors.success : colors.danger}
                 />
                 <Text style={[styles.changeText, { color: report.change > 0 ? colors.success : colors.danger }]}>
-                  {Math.abs(report.change)}%
+                  {Math.abs(report.change).toFixed(1)}%
                 </Text>
               </View>
             </TouchableOpacity>
@@ -130,24 +167,28 @@ export default function ReportsScreen() {
         </View>
 
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>Spending by Category</Text>
-          {CATEGORIES.map((category) => (
-            <View key={category.id} style={styles.categoryRow}>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>Spending by Account</Text>
+          {spendingByAccount.map((account) => (
+            <View key={account.accountName} style={styles.categoryRow}>
               <View style={styles.categoryInfo}>
-                <Text style={[styles.categoryName, { color: colors.text }]}>{category.name}</Text>
-                <Text style={[styles.categoryAmount, { color: colors.text }]}>${category.amount.toFixed(2)}</Text>
+                <Text style={[styles.categoryName, { color: colors.text }]}>{account.accountName}</Text>
+                <Text style={[styles.categoryAmount, { color: colors.text }]}>
+                  ${account.amount.toFixed(2)}
+                </Text>
               </View>
               <View style={styles.progressBarContainer}>
                 <View
                   style={[
                     styles.progressBar,
                     {
-                      width: `${category.percentage}%`,
-                      backgroundColor: colors.primary,
+                      width: `${account.percentage}%`,
+                      backgroundColor: account.type === "savings" ? colors.success : colors.primary,
                     },
                   ]}
                 />
-                <Text style={[styles.percentageText, { color: colors.textSecondary }]}>{category.percentage}%</Text>
+                <Text style={[styles.percentageText, { color: colors.textSecondary }]}>
+                  {account.percentage.toFixed(1)}%
+                </Text>
               </View>
             </View>
           ))}
