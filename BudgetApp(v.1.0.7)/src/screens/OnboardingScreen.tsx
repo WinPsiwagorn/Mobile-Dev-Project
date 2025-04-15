@@ -4,14 +4,14 @@ import type React from "react"
 import { useState, useRef } from "react"
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, type ScrollView, Animated } from "react-native"
 import { useTheme } from "../context/ThemeContext"
-import type { RootNavigationProp } from "../types/navigation"
+import type { RootStackNavigationProp } from "../types/navigation"
 import { LinearGradient } from "expo-linear-gradient"
 import { Wallet, ChartBar, Shield, CreditCard } from "lucide-react-native"
 
 const { width, height } = Dimensions.get("window")
 
 type Props = {
-  navigation: RootNavigationProp
+  navigation: RootStackNavigationProp
 }
 
 type OnboardingSlide = {
@@ -36,20 +36,6 @@ const slides: OnboardingSlide[] = [
     description: "Get detailed insights about your spending habits with beautiful charts.",
     icon: ChartBar,
     gradient: ["#3FBAFF", "#3F8FFF"],
-  },
-  {
-    id: "3",
-    title: "Secure Payments",
-    description: "Your financial data is protected with industry-standard security.",
-    icon: Shield,
-    gradient: ["#3FFF9F", "#3FFFC4"],
-  },
-  {
-    id: "4",
-    title: "Multiple Cards",
-    description: "Manage all your cards in one place with real-time tracking.",
-    icon: CreditCard,
-    gradient: ["#FF3F9F", "#FF3F76"],
   },
 ]
 

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Image,
   Switch,
+  Alert,
 } from "react-native"
 import { useTheme } from "../context/ThemeContext"
 import { useAuth } from "../context/AuthContext"
@@ -48,11 +49,27 @@ export default function ProfileScreen({ navigation }: Props) {
   }
 
   const handleSignOut = async () => {
-    try {
-      await signOut()
-    } catch (error) {
-      console.error("Error signing out:", error)
-    }
+    Alert.alert(
+      "Sign Out",
+      "Are you sure you want to sign out?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        {
+          text: "Sign Out",
+          onPress: async () => {
+            try {
+              await signOut()
+            } catch (error) {
+              console.error("Error signing out:", error)
+            }
+          },
+          style: "destructive"
+        }
+      ]
+    )
   }
 
   // Grouped Menu Items
@@ -170,7 +187,7 @@ export default function ProfileScreen({ navigation }: Props) {
             )}
             <View style={[styles.statusDot, { backgroundColor: colors.success }]} />
           </View>
-          <Text style={[styles.userName, { color: colors.surface }]}>{user?.displayName || "User"}</Text>
+          <Text style={[styles.userName, { color: colors.surface }]}>{user?.name || "User"}</Text>
           <Text style={[styles.userEmail, { color: colors.surface }]}>{user?.email || ""}</Text>
           <TouchableOpacity style={styles.editButton} onPress={handleEditProfile}>
             <Text style={styles.editButtonText}>Edit Profile</Text>

@@ -93,3 +93,7 @@ BudgetApp(V.1.0.7)
 - In Bill detail screen change payment method to account
 - fix comfirmpayment text
 - after pay bill and expense in account and dashboard
+
+BudgetApp(v.1.0.8)
+- remove Onboarding Screen that have non-existed function
+- Add Popup to ask user when user clicked on LogOut Button
