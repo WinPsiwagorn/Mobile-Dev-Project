@@ -97,3 +97,8 @@ BudgetApp(V.1.0.7)
 BudgetApp(v.1.0.7.5) - merge with Previous One
 - remove Onboarding Screen that have non-existed function
 - Add Popup to ask user when user clicked on LogOut Button
+
+BudgetApp(V.1.0.8) edit by kongphop
+- Fix it so that when you subscribe, the icon will show that you have subscribed.
+- Fixed the delete button to be usable.
+- Sign out button has been fixed to ask before exiting.
