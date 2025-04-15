@@ -94,6 +94,6 @@ BudgetApp(V.1.0.7)
 - fix comfirmpayment text
 - after pay bill and expense in account and dashboard
 
-BudgetApp(v.1.0.8)
+BudgetApp(v.1.0.7.5) - merge with Previous One
 - remove Onboarding Screen that have non-existed function
 - Add Popup to ask user when user clicked on LogOut Button
