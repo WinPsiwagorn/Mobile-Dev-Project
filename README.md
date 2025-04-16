@@ -107,3 +107,16 @@ from BudgetApp(v.1.0.8) --> BudgetApp(v.1.0.9)
 
 AddBillScreen:
 - redesign calendar
+
+BudgetApp(V.1.1.0) edit by phurinath
+
+AddAccountScreen.tsx
+- fix Current Balance & Goal Balance input to be number only
+AddBillScreen.tsx
+- fix Amount input to be number only
+AccountDetailScreen.tsx
+- change account card's color
+ReportScreen.tsx
+- add margin on top of report card
+BillScreen.tsx
+- add margin on top of filter
