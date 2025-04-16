@@ -110,13 +110,18 @@ AddBillScreen:
 
 BudgetApp(V.1.1.0) edit by phurinath
 
-AddAccountScreen.tsx
+//AddAccountScreen.tsx
 - fix Current Balance & Goal Balance input to be number only
-AddBillScreen.tsx
+//AddBillScreen.tsx
 - fix Amount input to be number only
-AccountDetailScreen.tsx
+//AccountDetailScreen.tsx
 - change account card's color
-ReportScreen.tsx
+//ReportScreen.tsx
 - add margin on top of report card
-BillScreen.tsx
+//BillScreen.tsx
 - add margin on top of filter
+
+BudgetApp(V.1.1.1) edited by Siwagorn
+-Add Data Deletion Function
+-Add Actual Function To Bill Reminder
+-Remove Some of the Onboarding Screen that missing due to version mismatched
