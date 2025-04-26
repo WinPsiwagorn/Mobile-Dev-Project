@@ -125,3 +125,6 @@ BudgetApp(V.1.1.1) edited by Siwagorn
 -Add Data Deletion Function
 -Add Actual Function To Bill Reminder
 -Remove Some of the Onboarding Screen that missing due to version mismatched
+
+BudgetApp(V.2.0.0)
+- Fetch Firebase Authen
