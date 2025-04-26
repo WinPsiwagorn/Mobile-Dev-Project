@@ -10,7 +10,7 @@ import type { RootStackParamList, AuthStackParamList, AppStackParamList } from "
 import "react-native-reanimated"
 import { CommonActions } from "@react-navigation/native"
 import { useEffect } from "react"
-
+    
 // Screens
 import OnboardingScreen from "./src/screens/OnboardingScreen"
 import LoginScreen from "./src/screens/LoginScreen"
